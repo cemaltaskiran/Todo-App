@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import tr.com.tradesoft.todoapp.R
+import tr.com.tradesoft.todoapp.core.Navigator
 import tr.com.tradesoft.todoapp.data.Todo
+import tr.com.tradesoft.todoapp.ui.create.CreateTodoFragment
 
 class TodoListFragment : Fragment() {
 
@@ -19,6 +22,8 @@ class TodoListFragment : Fragment() {
 
     private lateinit var viewModel: TodoListViewModel
     private lateinit var recyclerView: RecyclerView
+    private lateinit var addNewButton: Button
+    private var navigator: Navigator? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,13 +40,22 @@ class TodoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (activity is Navigator) {
+            navigator = activity as Navigator
+        }
 
         recyclerView = view.findViewById(R.id.todoList)
+        addNewButton = view.findViewById(R.id.addNewTodo)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = TodoListAdapter(listOf(
-            Todo("Bir", "açıklama"),
-            Todo("İki", "açıklama2"),
-        ))
+        recyclerView.adapter = TodoListAdapter(
+            listOf(
+                Todo("Bir", "açıklama"),
+                Todo("İki", "açıklama2"),
+            )
+        )
+        addNewButton.setOnClickListener {
+            navigator?.navigate(CreateTodoFragment.newInstance(), true)
+        }
     }
 
 }

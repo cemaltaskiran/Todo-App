@@ -2,11 +2,11 @@ package tr.com.tradesoft.todoapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import tr.com.tradesoft.todoapp.ui.create.CreateTodoFragment
+import androidx.fragment.app.Fragment
+import tr.com.tradesoft.todoapp.core.Navigator
 import tr.com.tradesoft.todoapp.ui.list.TodoListFragment
-import tr.com.tradesoft.todoapp.ui.main.MainFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Navigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,5 +16,16 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, TodoListFragment.newInstance())
                 .commitNow()
         }
+    }
+
+    override fun navigate(fragment: Fragment, addToBackStack: Boolean) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, fragment)
+            .apply {
+                if (addToBackStack) {
+                    addToBackStack(null)
+                }
+            }
+            .commit()
     }
 }
