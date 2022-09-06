@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import tr.com.tradesoft.todoapp.R
 import tr.com.tradesoft.todoapp.core.Navigator
-import tr.com.tradesoft.todoapp.data.Todo
+import tr.com.tradesoft.todoapp.data.repository.model.Todo
 import tr.com.tradesoft.todoapp.ui.create.CreateTodoFragment
 
 class TodoListFragment : Fragment() {

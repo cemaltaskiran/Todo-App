@@ -9,7 +9,7 @@ CREATE TABLE Todos (
 );
 
 insert:
-INSERT INTO Todos (title,description,dueDateTime,created,edited) VALUES(?,?,?,?,?);
+INSERT INTO Todos (title,description,dueDateTime,created) VALUES(?,?,?,?);
 
 updateById:
 UPDATE Todos SET title = ?, description = ?, dueDateTime = ?,edited = ?, done = ?  WHERE id = ?;
