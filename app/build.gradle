@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.squareup.sqldelight'
 }
 
 android {
@@ -31,9 +32,17 @@ android {
     }
 }
 
-dependencies {
+sqldelight {
+    AppDatabase {
+        packageName = "tr.com.tradesoft.todoapp.database"
+        dialect = "sqlite:3.24"
+        schemaOutputDirectory = file("src/main/sqldelight/databases")
+    }
+}
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+dependencies {
+    def koin_version= "3.2.0"
+    implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -43,4 +52,14 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // Koin for Android
+    implementation "io.insert-koin:koin-android:$koin_version"
+
+    // Koin Test
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+
+    // SQLDelight
+    implementation "com.squareup.sqldelight:android-driver:1.5.3"
 }
