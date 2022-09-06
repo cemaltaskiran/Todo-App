@@ -1,0 +1,21 @@
+CREATE TABLE Todos (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    description TEXT,
+    dueDateTime INTEGER,
+    created INTEGER NOT NULL,
+    edited INTEGER,
+    done INTEGER AS Boolean DEFAULT 0
+);
+
+insert:
+INSERT INTO Todos (title,description,dueDateTime,created,edited) VALUES(?,?,?,?,?);
+
+updateById:
+UPDATE Todos SET title = ?, description = ?, dueDateTime = ?,edited = ?, done = ?  WHERE id = ?;
+
+selectAll:
+SELECT * FROM Todos;
+
+deleteById:
+DELETE FROM Todos WHERE id = ?;
