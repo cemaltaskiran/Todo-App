@@ -7,7 +7,11 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import tr.com.tradesoft.todoapp.data.datasource.local.base.TodoLocalDataSource
 import tr.com.tradesoft.todoapp.data.datasource.local.impl.TodoLocalDataSourceImpl
+import tr.com.tradesoft.todoapp.data.repository.base.TodoRepository
+import tr.com.tradesoft.todoapp.data.repository.impl.TodoRepositoryImpl
 import tr.com.tradesoft.todoapp.database.AppDatabase
+import tr.com.tradesoft.todoapp.domain.CreateTodoUseCase
+import tr.com.tradesoft.todoapp.domain.GetTodosUseCase
 
 val appModule = module {
 
@@ -23,5 +27,15 @@ val appModule = module {
         TodoLocalDataSourceImpl(get())
     } bind TodoLocalDataSource::class
 
-    // TODO: TodoRepository ekle
+    single {
+        TodoRepositoryImpl(get())
+    } bind TodoRepository::class
+
+    factory {
+        CreateTodoUseCase(get())
+    }
+
+    factory {
+        GetTodosUseCase(get())
+    }
 }

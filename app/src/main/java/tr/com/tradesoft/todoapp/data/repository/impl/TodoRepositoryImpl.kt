@@ -1,10 +1,10 @@
 package tr.com.tradesoft.todoapp.data.repository.impl
 
+import tr.com.tradesoft.todoapp.core.DataResult
 import tr.com.tradesoft.todoapp.data.repository.model.Todo
 import tr.com.tradesoft.todoapp.data.datasource.local.base.TodoLocalDataSource
 import tr.com.tradesoft.todoapp.data.repository.base.TodoRepository
 import tr.com.tradesoft.todoapp.data.repository.mapToDomain
-import java.util.*
 
 class TodoRepositoryImpl(private val todoLocalDataSource: TodoLocalDataSource) : TodoRepository {
     override suspend fun create(
@@ -31,7 +31,12 @@ class TodoRepositoryImpl(private val todoLocalDataSource: TodoLocalDataSource) :
         todoLocalDataSource.deleteById(id)
     }
 
-    override suspend fun getAll(): List<Todo> {
-        return todoLocalDataSource.getAll().map { it.mapToDomain() }
+    override suspend fun getAll(): DataResult<List<Todo>> {
+        return try {
+            val result = todoLocalDataSource.getAll().map { it.mapToDomain() }
+            DataResult.Success(result)
+        } catch (e: Exception) {
+            DataResult.Error(e)
+        }
     }
 }

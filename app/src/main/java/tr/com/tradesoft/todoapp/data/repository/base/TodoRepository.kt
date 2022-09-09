@@ -1,5 +1,6 @@
 package tr.com.tradesoft.todoapp.data.repository.base
 
+import tr.com.tradesoft.todoapp.core.DataResult
 import tr.com.tradesoft.todoapp.data.repository.model.Todo
 
 interface TodoRepository {
@@ -14,5 +15,5 @@ interface TodoRepository {
     )
 
     suspend fun deleteById(id: Long)
-    suspend fun getAll(): List<Todo>
+    suspend fun getAll(): DataResult<List<Todo>>
 }
