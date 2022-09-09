@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.create.CreateTodoFragment">
+    tools:context=".ui.edit.EditTodoFragment">
 
     <EditText
-        android:id="@+id/todoTitle"
+        android:id="@+id/editTodoTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/todoDescription"
+        android:id="@+id/editTodoDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -34,16 +34,38 @@
         android:hint="@string/please_enter_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/todoTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/editTodoTitle" />
+
+    <CheckBox
+        android:id="@+id/editTodoDoneCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/done"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTodoDescription">
+
+    </CheckBox>
 
     <Button
-        android:id="@+id/createTodoButton"
+        android:id="@+id/editTodoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTodoDoneCheckBox" />
+
+    <Button
+        android:id="@+id/deleteTodoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/delete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/todoDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/editTodoDoneCheckBox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

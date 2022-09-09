@@ -12,8 +12,9 @@ import android.widget.Toolbar
 import tr.com.tradesoft.todoapp.MainActivity
 import tr.com.tradesoft.todoapp.R
 import tr.com.tradesoft.todoapp.core.Navigator
+import tr.com.tradesoft.todoapp.core.NavigatorFragment
 
-class CreateTodoFragment : Fragment() {
+class CreateTodoFragment : NavigatorFragment() {
 
     companion object {
         fun newInstance() = CreateTodoFragment()
@@ -23,7 +24,6 @@ class CreateTodoFragment : Fragment() {
     private lateinit var todoTitle: EditText
     private lateinit var todoDescription: EditText
     private lateinit var createTodoButton: Button
-    private var navigator: Navigator? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,10 +34,6 @@ class CreateTodoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (activity is Navigator) {
-            navigator = activity as Navigator
-        }
 
         viewModel = ViewModelProvider(this).get(CreateTodoViewModel::class.java)
         todoTitle = view.findViewById(R.id.todoTitle)

@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 import tr.com.tradesoft.todoapp.R
 import tr.com.tradesoft.todoapp.core.Navigator
+import tr.com.tradesoft.todoapp.core.NavigatorFragment
 import tr.com.tradesoft.todoapp.data.repository.model.Todo
 import tr.com.tradesoft.todoapp.ui.create.CreateTodoFragment
+import tr.com.tradesoft.todoapp.ui.edit.EditTodoFragment
 
-class TodoListFragment : Fragment() {
+class TodoListFragment : NavigatorFragment() {
 
     companion object {
         fun newInstance() = TodoListFragment()
@@ -25,7 +27,6 @@ class TodoListFragment : Fragment() {
     private lateinit var viewModel: TodoListViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var addNewButton: Button
-    private var navigator: Navigator? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,9 +37,7 @@ class TodoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (activity is Navigator) {
-            navigator = activity as Navigator
-        }
+
         viewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
 
         recyclerView = view.findViewById(R.id.todoList)
@@ -47,7 +46,9 @@ class TodoListFragment : Fragment() {
 
         viewModel.viewModelScope.launch {
             viewModel.state.collect { state ->
-                recyclerView.adapter = TodoListAdapter(state.list)
+                recyclerView.adapter = TodoListAdapter(state.list) {
+                    navigator?.navigate(EditTodoFragment.newInstance(it), true)
+                }
             }
         }
 

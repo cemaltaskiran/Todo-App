@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TodoApp</string>
+    <string name="please_enter_title">Lütfen Başlık Giriniz</string>
+    <string name="please_enter_description">Lütfen Açıklama Giriniz</string>
+    <string name="save">Kaydet</string>
+    <string name="delete">Sil</string>
+    <string name="done">Tamamlandı</string>
 </resources>

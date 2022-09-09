@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tr.com.tradesoft.todoapp.R
 import tr.com.tradesoft.todoapp.data.repository.model.Todo
 
-class TodoListAdapter(private val dataSet: List<Todo>) :
+class TodoListAdapter(private val dataSet: List<Todo>, private val onClick: (todo: Todo) -> Unit) :
     RecyclerView.Adapter<TodoListAdapter.ViewHolder>() {
 
     /**
@@ -43,6 +43,10 @@ class TodoListAdapter(private val dataSet: List<Todo>) :
         val todo = dataSet[position]
         viewHolder.title.text = todo.title
         viewHolder.description.text = todo.description
+
+        viewHolder.itemView.setOnClickListener {
+            onClick(todo)
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
