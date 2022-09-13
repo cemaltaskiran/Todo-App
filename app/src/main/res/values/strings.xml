@@ -8,4 +8,9 @@
     <string name="are_you_sure_to_delete_todo">Todo silmek istediğinize emin misiniz?</string>
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
+    <string name="please_enter_date">Tarih seçiniz</string>
+    <string name="please_enter_time">Saat seçiniz</string>
+    <string name="set_alarm">Alarm kur</string>
+    <string name="date">Tarih</string>
+    <string name="time">Saat</string>
 </resources>

@@ -4,7 +4,7 @@ import tr.com.tradesoft.todoapp.core.DataResult
 import tr.com.tradesoft.todoapp.data.repository.model.Todo
 
 interface TodoRepository {
-    suspend fun create(title: String, description: String?, dueDateTime: Long?, created: Long)
+    suspend fun create(title: String, description: String?, dueDateTime: Long?, created: Long): DataResult<Long>
     suspend fun update(
         id: Long,
         title: String,

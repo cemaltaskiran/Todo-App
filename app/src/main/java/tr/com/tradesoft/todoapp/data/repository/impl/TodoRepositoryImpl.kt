@@ -12,8 +12,19 @@ class TodoRepositoryImpl(private val todoLocalDataSource: TodoLocalDataSource) :
         description: String?,
         dueDateTime: Long?,
         created: Long
-    ) {
-        todoLocalDataSource.create(title, description, dueDateTime, created)
+    ): DataResult<Long> {
+        try {
+            return DataResult.Success(
+                todoLocalDataSource.create(
+                    title,
+                    description,
+                    dueDateTime,
+                    created
+                )
+            )
+        } catch (e: Exception) {
+            return DataResult.Error(e)
+        }
     }
 
     override suspend fun update(

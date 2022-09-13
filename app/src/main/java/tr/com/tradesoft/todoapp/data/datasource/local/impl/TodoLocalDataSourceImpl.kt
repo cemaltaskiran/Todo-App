@@ -11,8 +11,9 @@ class TodoLocalDataSourceImpl(private val appDatabase: AppDatabase) : TodoLocalD
         description: String?,
         dueDateTime: Long?,
         created: Long
-    ) {
+    ): Long {
         appDatabase.todosQueries.insert(title, description, dueDateTime, created)
+        return appDatabase.todosQueries.lastInsertRowId().executeAsOne()
     }
 
     override suspend fun update(

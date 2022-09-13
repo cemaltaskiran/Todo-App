@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="tr.com.tradesoft.todoapp">
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
