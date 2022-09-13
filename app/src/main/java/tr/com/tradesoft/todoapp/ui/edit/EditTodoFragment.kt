@@ -1,16 +1,17 @@
 package tr.com.tradesoft.todoapp.ui.edit
 
-import androidx.lifecycle.ViewModelProvider
+import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import tr.com.tradesoft.todoapp.R
-import tr.com.tradesoft.todoapp.core.Navigator
 import tr.com.tradesoft.todoapp.core.NavigatorFragment
 import tr.com.tradesoft.todoapp.data.repository.model.Todo
 
@@ -56,6 +57,30 @@ class EditTodoFragment(private val originalTodo: Todo) : NavigatorFragment() {
                 doneCheckBox.isChecked
             )
             navigator?.popBack()
+        }
+
+        deleteTodoButton.setOnClickListener {
+            DeleteTodoDialogFragment(onPositive = {
+                viewModel.delete(originalTodo.id)
+                navigator?.popBack()
+            }).show(childFragmentManager, DeleteTodoDialogFragment.TAG)
+        }
+    }
+
+    class DeleteTodoDialogFragment(
+        val onPositive: () -> Unit
+    ) : DialogFragment() {
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
+            AlertDialog.Builder(requireContext())
+                .setMessage(getString(R.string.are_you_sure_to_delete_todo))
+                .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                    onPositive()
+                }
+                .setNegativeButton(getString(R.string.no)) { _, _ -> }
+                .create()
+
+        companion object {
+            const val TAG = "DeleteTodoDialogFragment"
         }
     }
 

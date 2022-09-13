@@ -5,4 +5,7 @@
     <string name="save">Kaydet</string>
     <string name="delete">Sil</string>
     <string name="done">Tamamlandı</string>
+    <string name="are_you_sure_to_delete_todo">Todo silmek istediğinize emin misiniz?</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
 </resources>

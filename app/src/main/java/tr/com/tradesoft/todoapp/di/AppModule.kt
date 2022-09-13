@@ -11,6 +11,7 @@ import tr.com.tradesoft.todoapp.data.repository.base.TodoRepository
 import tr.com.tradesoft.todoapp.data.repository.impl.TodoRepositoryImpl
 import tr.com.tradesoft.todoapp.database.AppDatabase
 import tr.com.tradesoft.todoapp.domain.CreateTodoUseCase
+import tr.com.tradesoft.todoapp.domain.DeleteTodoUseCase
 import tr.com.tradesoft.todoapp.domain.EditTodoUseCase
 import tr.com.tradesoft.todoapp.domain.GetTodosUseCase
 
@@ -42,5 +43,9 @@ val appModule = module {
 
     factory {
         EditTodoUseCase(get())
+    }
+
+    factory {
+        DeleteTodoUseCase(get())
     }
 }
