@@ -20,5 +20,8 @@ SELECT * FROM Todos;
 deleteById:
 DELETE FROM Todos WHERE id = ?;
 
+selectById:
+SELECT * FROM Todos WHERE id = ?;
+
 lastInsertRowId:
 SELECT last_insert_rowid();

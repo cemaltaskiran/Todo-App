@@ -34,4 +34,8 @@ class TodoLocalDataSourceImpl(private val appDatabase: AppDatabase) : TodoLocalD
     override suspend fun getAll(): List<Todos> {
         return appDatabase.todosQueries.selectAll().executeAsList()
     }
+
+    override suspend fun getById(id: Long): Todos {
+        return appDatabase.todosQueries.selectById(id).executeAsOne()
+    }
 }

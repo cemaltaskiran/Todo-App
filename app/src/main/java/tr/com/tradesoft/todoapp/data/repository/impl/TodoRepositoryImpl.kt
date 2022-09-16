@@ -50,4 +50,13 @@ class TodoRepositoryImpl(private val todoLocalDataSource: TodoLocalDataSource) :
             DataResult.Error(e)
         }
     }
+
+    override suspend fun getById(id: Long): DataResult<Todo> {
+        return try {
+            val result = todoLocalDataSource.getById(id).mapToDomain()
+            DataResult.Success(result)
+        } catch (e: Exception) {
+            DataResult.Error(e)
+        }
+    }
 }

@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
+import tr.com.tradesoft.todoapp.MainActivity
 import tr.com.tradesoft.todoapp.R
 import tr.com.tradesoft.todoapp.core.Navigator
 import tr.com.tradesoft.todoapp.core.NavigatorFragment
@@ -34,6 +35,8 @@ class TodoListFragment : NavigatorFragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_todo_list, container, false)
     }
+
+    override val title: String get() = getString(R.string.list_todo_title)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

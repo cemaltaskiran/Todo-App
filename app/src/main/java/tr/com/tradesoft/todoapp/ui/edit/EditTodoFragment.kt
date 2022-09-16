@@ -28,6 +28,8 @@ class EditTodoFragment(private val originalTodo: Todo) : NavigatorFragment() {
     private lateinit var deleteTodoButton: Button
     private lateinit var doneCheckBox: CheckBox
 
+    override val title: String get() = getString(R.string.edit_todo_title)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

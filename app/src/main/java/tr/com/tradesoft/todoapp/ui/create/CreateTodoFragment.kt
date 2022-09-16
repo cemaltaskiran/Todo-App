@@ -14,10 +14,13 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import tr.com.tradesoft.todoapp.MainActivity
 import tr.com.tradesoft.todoapp.R
+import tr.com.tradesoft.todoapp.core.ALARM_ID
 import tr.com.tradesoft.todoapp.core.AlarmReceiver
 import tr.com.tradesoft.todoapp.core.DataResult
 import tr.com.tradesoft.todoapp.core.NavigatorFragment
+import tr.com.tradesoft.todoapp.databinding.FragmentCreateTodoBinding
 import java.util.*
 
 class CreateTodoFragment : NavigatorFragment() {
@@ -27,38 +30,30 @@ class CreateTodoFragment : NavigatorFragment() {
     }
 
     private lateinit var viewModel: CreateTodoViewModel
-    private lateinit var todoTitle: EditText
-    private lateinit var todoDescription: EditText
-    private lateinit var createTodoButton: Button
-    private lateinit var dateTextView: TextView
-    private lateinit var timeTextView: TextView
-    private lateinit var setAlarmForTodo: CheckBox
-    private lateinit var dateTimell: LinearLayout
+
+    private var _binding: FragmentCreateTodoBinding? = null
+    private val binding get() = _binding!!
+
     private val calendar = Calendar.getInstance()
     private var isDatePicked = false
     private var isTimePicked = false
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_create_todo, container, false)
+        _binding = FragmentCreateTodoBinding.inflate(inflater, container, false)
+        return _binding?.root
     }
+    override val title: String get() = getString(R.string.create_todo_title)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(CreateTodoViewModel::class.java)
-        todoTitle = view.findViewById(R.id.todoTitle)
-        todoDescription = view.findViewById(R.id.todoDescription)
-        createTodoButton = view.findViewById(R.id.createTodoButton)
-        dateTextView = view.findViewById(R.id.dateTextView)
-        timeTextView = view.findViewById(R.id.timeTextView)
-        setAlarmForTodo = view.findViewById(R.id.setAlarmForTodo)
-        dateTimell = view.findViewById(R.id.dateTimell)
-
-        createTodoButton.setOnClickListener {
-            val setAlarm = setAlarmForTodo.isChecked
+        binding.createTodoButton.setOnClickListener {
+            val setAlarm = binding.setAlarmForTodo.isChecked
 
             val dueDate = if (setAlarm && isDatePicked && isTimePicked) {
                 calendar.time
@@ -68,8 +63,8 @@ class CreateTodoFragment : NavigatorFragment() {
 
             viewModel.viewModelScope.launch {
                 when (val result = viewModel.createTodo(
-                    todoTitle.text.toString(),
-                    todoDescription.text.toString(),
+                    binding.todoTitle.text.toString(),
+                    binding.todoDescription.text.toString(),
                     setAlarm,
                     dueDate
                 )) {
@@ -90,20 +85,20 @@ class CreateTodoFragment : NavigatorFragment() {
             }
         }
 
-        setAlarmForTodo.setOnCheckedChangeListener { _, isChecked ->
+        binding.setAlarmForTodo.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                dateTimell.visibility = View.VISIBLE
+                binding.dateTimell.visibility = View.VISIBLE
             } else {
-                dateTimell.visibility = View.GONE
+                binding.dateTimell.visibility = View.GONE
             }
         }
 
-        dateTextView.setOnClickListener {
+        binding.dateTextView.setOnClickListener {
             context?.run {
                 val datePicker = DatePickerDialog(
                     this,
                     { _, year, month, dayOfMonth ->
-                        dateTextView.text = "%s: %02d.%02d.%d".format(
+                        binding.dateTextView.text = "%s: %02d.%02d.%d".format(
                             getString(R.string.date),
                             dayOfMonth,
                             month,
@@ -122,13 +117,13 @@ class CreateTodoFragment : NavigatorFragment() {
             }
         }
 
-        timeTextView.setOnClickListener {
+        binding.timeTextView.setOnClickListener {
             context?.run {
                 val timePickerDialog =
                     TimePickerDialog(
                         this,
                         { _, hourOfDay, minute ->
-                            timeTextView.text = "%s: %02d:%02d".format(
+                            binding.timeTextView.text = "%s: %02d:%02d".format(
                                 getString(R.string.time),
                                 hourOfDay,
                                 minute,
@@ -146,16 +141,17 @@ class CreateTodoFragment : NavigatorFragment() {
         }
     }
 
-    private fun setAlarm(context: Context, calendar: Calendar, id: Long){
+    private fun setAlarm(context: Context, calendar: Calendar, id: Long) {
         val alarmManager =
             context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
-        val intent = Intent(context, AlarmReceiver::class.java)
-        intent.putExtra("id", id)
-        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
+        val intent = Intent(context, AlarmReceiver::class.java).let { intent ->
+            intent.putExtra(ALARM_ID, id)
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_MUTABLE)
+        }
         alarmManager?.set(
-            AlarmManager.RTC_WAKEUP,
+            AlarmManager.ELAPSED_REALTIME_WAKEUP,
             calendar.timeInMillis,
-            pendingIntent
+            intent
         )
     }
 

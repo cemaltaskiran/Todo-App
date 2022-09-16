@@ -15,4 +15,5 @@ interface TodoLocalDataSource {
 
     suspend fun deleteById(id: Long)
     suspend fun getAll(): List<Todos>
+    suspend fun getById(id: Long): Todos
 }

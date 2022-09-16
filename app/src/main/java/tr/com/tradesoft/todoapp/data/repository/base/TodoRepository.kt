@@ -16,4 +16,5 @@ interface TodoRepository {
 
     suspend fun deleteById(id: Long)
     suspend fun getAll(): DataResult<List<Todo>>
+    suspend fun getById(id: Long): DataResult<Todo>
 }

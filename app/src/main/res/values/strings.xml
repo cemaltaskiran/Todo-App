@@ -13,4 +13,8 @@
     <string name="set_alarm">Alarm kur</string>
     <string name="date">Tarih</string>
     <string name="time">Saat</string>
+    <string name="close_alarm">Alarmı kapat</string>
+    <string name="create_todo_title">Todo Oluştur</string>
+    <string name="edit_todo_title">Todo Düzenle</string>
+    <string name="list_todo_title">Todos</string>
 </resources>
