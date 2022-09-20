@@ -7,6 +7,9 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import tr.com.tradesoft.todoapp.data.datasource.local.base.TodoLocalDataSource
 import tr.com.tradesoft.todoapp.data.datasource.local.impl.TodoLocalDataSourceImpl
+import tr.com.tradesoft.todoapp.data.datasource.remote.base.LoginRemoteDataSource
+import tr.com.tradesoft.todoapp.data.datasource.remote.service.LoginService
+import tr.com.tradesoft.todoapp.data.datasource.remote.impl.LoginRemoteDataSourceImpl
 import tr.com.tradesoft.todoapp.data.repository.base.TodoRepository
 import tr.com.tradesoft.todoapp.data.repository.impl.TodoRepositoryImpl
 import tr.com.tradesoft.todoapp.database.AppDatabase
@@ -49,4 +52,16 @@ val appModule = module {
     factory {
         GetTodoUseCase(get())
     }
+
+    factory {
+        LoginUseCase(get())
+    }
+
+    single {
+        LoginService.create()
+    }
+
+    single {
+        LoginRemoteDataSourceImpl(get())
+    } bind LoginRemoteDataSource::class
 }
