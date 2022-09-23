@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import tr.com.tradesoft.todoapp.core.Navigator
+import tr.com.tradesoft.todoapp.ui.list.TodoListFragment
 import tr.com.tradesoft.todoapp.ui.login.LoginFragment
 
 class MainActivity : AppCompatActivity(), Navigator {
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity(), Navigator {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, LoginFragment.newInstance())
+                .replace(R.id.container, TodoListFragment.newInstance())
                 .commitNow()
         }
 

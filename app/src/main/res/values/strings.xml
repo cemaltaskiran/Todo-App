@@ -23,4 +23,7 @@
     <string name="idle">Idle</string>
     <string name="failed">Failed</string>
     <string name="success">Success</string>
+    <string name="title">Başlık</string>
+    <string name="description">Açıklama</string>
+    <string name="new_todo">Yeni todo</string>
 </resources>
