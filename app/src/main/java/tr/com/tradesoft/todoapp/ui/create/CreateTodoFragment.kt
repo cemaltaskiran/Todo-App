@@ -6,15 +6,15 @@ import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.lifecycle.viewModelScope
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import coil.load
 import kotlinx.coroutines.launch
-import tr.com.tradesoft.todoapp.MainActivity
 import tr.com.tradesoft.todoapp.R
 import tr.com.tradesoft.todoapp.core.ALARM_ID
 import tr.com.tradesoft.todoapp.core.AlarmReceiver
@@ -46,6 +46,7 @@ class CreateTodoFragment : NavigatorFragment() {
         _binding = FragmentCreateTodoBinding.inflate(inflater, container, false)
         return _binding?.root
     }
+
     override val title: String get() = getString(R.string.create_todo_title)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,7 +62,7 @@ class CreateTodoFragment : NavigatorFragment() {
                 null
             }
 
-            viewModel.viewModelScope.launch {
+            lifecycleScope.launch {
                 when (val result = viewModel.createTodo(
                     binding.todoTitle.text.toString(),
                     binding.todoDescription.text.toString(),
@@ -139,6 +140,8 @@ class CreateTodoFragment : NavigatorFragment() {
                 timePickerDialog.show()
             }
         }
+
+        binding.todoImage.load("https://images.unsplash.com/photo-1602629978879-e7ed887988d1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80")
     }
 
     private fun setAlarm(context: Context, calendar: Calendar, id: Long) {

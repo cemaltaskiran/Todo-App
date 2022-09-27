@@ -20,18 +20,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import coil.compose.SubcomposeAsyncImage
 import tr.com.tradesoft.todoapp.R
 import tr.com.tradesoft.todoapp.core.NavigatorFragment
 import tr.com.tradesoft.todoapp.data.repository.model.Todo
 import tr.com.tradesoft.todoapp.databinding.FragmentEditTodoComposeBinding
 import tr.com.tradesoft.todoapp.ui.edit.components.TodoTextField
 
-class EditTodoFragment(private val originalTodo: Todo) : NavigatorFragment() {
+private const val TODO_KEY = "TODO_KEY"
+
+class EditTodoFragment : NavigatorFragment() {
 
     companion object {
-        fun newInstance(todo: Todo) = EditTodoFragment(todo)
+        fun newInstance(todo: Todo): EditTodoFragment {
+
+            val bundle = Bundle().apply {
+                putSerializable(TODO_KEY, todo)
+            }
+
+            return EditTodoFragment().apply {
+                arguments = bundle
+            }
+        }
     }
 
+    private lateinit var originalTodo: Todo
     private lateinit var viewModel: EditTodoViewModel
     private var _binding: FragmentEditTodoComposeBinding? = null
     private val binding get() = _binding!!
@@ -42,6 +55,15 @@ class EditTodoFragment(private val originalTodo: Todo) : NavigatorFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getSerializable(TODO_KEY, Todo::class.java)?.run {
+                originalTodo = this
+            }
+        } else {
+            (arguments?.getSerializable(TODO_KEY) as? Todo)?.run {
+                originalTodo = this
+            }
+        }
         _binding = FragmentEditTodoComposeBinding.inflate(layoutInflater, container, false)
 
         binding.composeView.apply {
@@ -58,6 +80,14 @@ class EditTodoFragment(private val originalTodo: Todo) : NavigatorFragment() {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
+                        SubcomposeAsyncImage(
+                            model = "https://www.meisternote.com/images/home/features-watching-87ad887f87168f51c00a4c678a79f27b.png?vsn=d",
+                            contentDescription = null,
+                            //modifier = Modifier.clip(RoundedCornerShape(10.dp)),
+                            loading = {
+                                CircularProgressIndicator()
+                            }
+                        )
                         TodoTextField(
                             value = todoName,
                             onValueChange = {

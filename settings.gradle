@@ -12,5 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+enableFeaturePreview("VERSION_CATALOGS")
 rootProject.name = "TodoApp"
 include ':app'

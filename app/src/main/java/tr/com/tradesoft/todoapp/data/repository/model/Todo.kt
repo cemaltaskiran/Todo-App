@@ -1,6 +1,8 @@
 package tr.com.tradesoft.todoapp.data.repository.model
 
+import java.io.Serializable
 import java.util.*
+
 
 data class Todo(
     val id: Long,
@@ -10,4 +12,4 @@ data class Todo(
     val created: Date,
     val edited: Date?,
     val done: Boolean,
-)
+): Serializable

@@ -95,4 +95,7 @@ dependencies {
     implementation 'androidx.compose.animation:animation:1.2.1'
     // Integration with ViewModels
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+
+    //Coil
+    implementation(libs.bundles.coil)
 }
